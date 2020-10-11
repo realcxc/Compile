@@ -59,6 +59,9 @@ int main(int argc, char ** argv){
             while((ch=getc(fp))!=EOF&&(isdigit(ch)||isalpha(ch))){
                 s[i++]=ch;
             }
+            if(ch!=EOF){
+                fseek(fp,-1L,1);
+            }
             s[i]=0;
             if(strcmp(s,"BEGIN")==0||strcmp(s,"END")==0||strcmp(s,"FOR")==0||strcmp(s,"IF")==0||strcmp(s,"THEN")==0||
             strcmp(s,"ELSE")==0){
