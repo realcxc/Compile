@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include<stdio.h>
 #include<string.h>
+#include<ctype.h>
 int main(int argc, char ** argv){
     FILE *fp=NULL;
     char ch;
@@ -13,23 +14,23 @@ int main(int argc, char ** argv){
             puts("Plus");
             continue;
         }
-        if(ch=='*'){
+        else if(ch=='*'){
             puts("Star");
             continue;
         }
-        if(ch==','){
+        else if(ch==','){
             puts("Comma");
             continue;
         }
-        if(ch=='('){
+        else if(ch=='('){
             puts("LParenthesis");
             continue;
         }
-        if(ch==')'){
+        else if(ch==')'){
             puts("RParenthesis");
             continue;
         }
-        if(ch==':'){
+        else if(ch==':'){
             char ch1=getc(fp);
             if(ch1=='='){
                 puts("Assign");
@@ -42,6 +43,33 @@ int main(int argc, char ** argv){
                 fseek(fp,-1L,1);
             }
             continue;
+        }
+        else if(isdigit(ch)){
+            int ans=ch-'0';
+            while((ch=getc(fp))!=EOF&&isdigit(ch)){
+                ans=ans*10+ch-'0';
+            }
+            printf("Int(%d)\n",ans);
+            fseek(fp,-1L,1);
+        }
+        else if(isalpha(ch)){
+            char s[500];
+            int i=0;
+            s[i++]=ch;
+            while((ch=getc(fp))!=EOF&&(isdigit(ch)||isalpha(ch))){
+                s[i++]=ch;
+            }
+            s[i]=0;
+            if(strcmp(s,"BEGIN")==0||strcmp(s,"END")==0||strcmp(s,"FOR")==0||strcmp(s,"IF")==0||strcmp(s,"THEN")==0||
+            strcmp(s,"ELSE")==0){
+                for(int j=1;j<strlen(s);j++){
+                    s[j]=tolower(s[j]);
+                }
+                puts(s);
+            }
+            else{
+                printf("Ident(%s)\n",s);
+            }
         }
     }
     fclose(fp);
