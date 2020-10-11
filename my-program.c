@@ -71,6 +71,13 @@ int main(int argc, char ** argv){
                 printf("Ident(%s)\n",s);
             }
         }
+        else if(ch==' '||ch=='\n'||ch=='\t'){
+            continue;
+        }
+        else{
+            puts("Unknown");
+            break;
+        }
     }
     fclose(fp);
     return 0;
