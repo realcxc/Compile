@@ -65,8 +65,8 @@ int main(int argc, char ** argv){
     //打开文件
     fp = fopen(argv[1],"r");
     //第一个双引号里面放的是文件具体路径，第二个是对文件进行的操作
-    char op_stack[1050],sub_stack[1050];
-    int op_pointer=0,sub_pointer=-1;
+    char op_stack[1050];
+    int op_pointer=0;
     op_stack[0]='#';
     char s[1050];
     int i=0;
@@ -76,14 +76,11 @@ int main(int argc, char ** argv){
     s[i]=0,s[i-1]='#';
     fclose(fp);
     int read=0;
-    while(op_stack[op_pointer]!='#'||s[read]!='#'){
+    while(!(op_pointer>0&&s[read]=='#')){
         char curread=s[read],curop=op_stack[op_pointer];
         switch (get_priority(curop,curread))
         {
         case -1:
-            if(curread=='i'){
-                sub_stack[++sub_pointer]=curread;
-            }
             op_stack[++op_pointer]=s[read++];
             printf("I%c\n",curread);
             break;
@@ -93,10 +90,8 @@ int main(int argc, char ** argv){
             break;
         case 1:
             if(curop=='i'){
-                if(sub_stack[sub_pointer]=='i'){
-                    sub_pointer--;
-                    sub_stack[++sub_pointer]='N';
-                    op_pointer--;
+                if(op_stack[op_pointer]=='i'){
+                    op_stack[op_pointer]='N';
                     puts("R");
                 }
                 else{
@@ -105,10 +100,9 @@ int main(int argc, char ** argv){
                 }
             }
             else if(curop=='+'||curop=='*'){
-                    if(sub_pointer>0&&sub_stack[sub_pointer]=='N'&&sub_stack[sub_pointer-1]=='N'){
-                        sub_pointer-=2;
-                        sub_stack[++sub_pointer]='N';
-                        op_pointer--;
+                    if(op_pointer>2&&op_stack[op_pointer-2]=='N'&&op_stack[op_pointer-1]=='N'){
+                        op_pointer-=3;
+                        op_stack[++op_pointer]='N';
                         puts("R");
                     }
                     else{
@@ -117,7 +111,15 @@ int main(int argc, char ** argv){
                 }
             }
             else if(curop==')'){
-                    op_pointer--;
+                    if(op_pointer>2&&op_stack[op_pointer-2]=='('&&op_stack[op_pointer-1]=='N'){
+                        op_pointer-=3;
+                        op_stack[++op_pointer]='N';
+                        puts("R");
+                    }
+                    else{
+                        puts("RE");
+                        return 0;
+                }
             }
             break;
         case 2:
