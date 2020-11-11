@@ -77,7 +77,13 @@ int main(int argc, char ** argv){
     fclose(fp);
     int read=0;
     while(!(op_pointer>0&&s[read]=='#')){
-        char curread=s[read],curop=op_stack[op_pointer];
+        char curread=s[read],curop;
+        for(int i=op_pointer;i>=0;--i){
+            if(op_stack[i]!='N'){
+                curop=op_stack[i];
+                break;
+            }
+        }
         switch (get_priority(curop,curread))
         {
         case -1:
