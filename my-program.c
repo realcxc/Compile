@@ -76,7 +76,7 @@ int main(int argc, char ** argv){
     s[i]=0,s[i-1]='#';
     fclose(fp);
     int read=0;
-    while(!(op_pointer>0&&s[read]=='#')){
+    while(!(op_pointer>1&&s[read]=='#')){
         char curread=s[read],curop;
         for(int i=op_pointer;i>=0;--i){
             if(op_stack[i]!='N'){
