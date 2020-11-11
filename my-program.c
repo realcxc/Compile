@@ -106,7 +106,7 @@ int main(int argc, char ** argv){
                 }
             }
             else if(curop=='+'||curop=='*'){
-                    if(op_pointer>2&&op_stack[op_pointer-2]=='N'&&op_stack[op_pointer-1]=='N'){
+                    if(op_pointer>2&&op_stack[op_pointer-2]=='N'&&op_stack[op_pointer]=='N'){
                         op_pointer-=3;
                         op_stack[++op_pointer]='N';
                         puts("R");
