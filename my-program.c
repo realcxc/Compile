@@ -76,7 +76,7 @@ int main(int argc, char ** argv){
     s[i]=0,s[i-1]='#';
     fclose(fp);
     int read=0;
-    while(!(op_pointer>1&&s[read]=='#')){
+    while(!(op_pointer<=1&&s[read]=='#')){
         char curread=s[read],curop;
         for(int i=op_pointer;i>=0;--i){
             if(op_stack[i]!='N'){
@@ -92,6 +92,8 @@ int main(int argc, char ** argv){
             break;
         case 0:
             read++;
+            printf("I%c\n",curread);
+            puts("R");
             op_pointer--;
             break;
         case 1:
@@ -136,5 +138,6 @@ int main(int argc, char ** argv){
             break;
         }
     }
+    
     return 0;
 }
