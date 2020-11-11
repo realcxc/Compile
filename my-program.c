@@ -60,7 +60,6 @@ int get_priority(char a,char b){
     return matrix[aa][bb];
 }
 int main(int argc, char ** argv){
-    printf("hello\n");
     FILE *fp=NULL;
     char ch;
     //打开文件
@@ -76,7 +75,6 @@ int main(int argc, char ** argv){
     }
     s[i-1]=0,s[i-2]='#';
     fclose(fp);
-    printf("%s\n",s);
     int read=0;
     while(!(op_pointer<=1&&s[read]=='#')){
         op_stack[op_pointer+1]=0;
@@ -87,7 +85,7 @@ int main(int argc, char ** argv){
                 break;
             }
         }
-        printf("%c %c %s ",curop,curread,op_stack);
+    
         switch (get_priority(curop,curread))
         {
         case -1:
