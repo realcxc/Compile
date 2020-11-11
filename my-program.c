@@ -93,6 +93,7 @@ int main(int argc, char ** argv){
             printf("I%c\n",curread);
             break;
         case 0:
+            printf("I%c\n",curread);
             if(op_pointer>2&&op_stack[op_pointer-1]=='('&&op_stack[op_pointer]=='N'){
                         op_pointer-=2;
                         op_stack[++op_pointer]='N';
