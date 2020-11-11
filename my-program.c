@@ -60,6 +60,7 @@ int get_priority(char a,char b){
     return matrix[aa][bb];
 }
 int main(int argc, char ** argv){
+    printf("hello\n");
     FILE *fp=NULL;
     char ch;
     //打开文件
@@ -70,13 +71,15 @@ int main(int argc, char ** argv){
     op_stack[0]='#';
     char s[1050];
     int i=0;
-    while((ch=getc(fp))!='\n'){
+    while((ch=getc(fp))!=EOF){
         s[i++]=ch;
     }
-    s[i]=0,s[i-1]='#';
+    s[i-1]=0,s[i-2]='#';
     fclose(fp);
+    printf("%s\n",s);
     int read=0;
     while(!(op_pointer<=1&&s[read]=='#')){
+        op_stack[op_pointer+1]=0;
         char curread=s[read],curop;
         for(int i=op_pointer;i>=0;--i){
             if(op_stack[i]!='N'){
@@ -84,6 +87,7 @@ int main(int argc, char ** argv){
                 break;
             }
         }
+        printf("%c %c %s ",curop,curread,op_stack);
         switch (get_priority(curop,curread))
         {
         case -1:
@@ -91,10 +95,16 @@ int main(int argc, char ** argv){
             printf("I%c\n",curread);
             break;
         case 0:
-            read++;
-            printf("I%c\n",curread);
-            puts("R");
-            op_pointer--;
+            if(op_pointer>2&&op_stack[op_pointer-1]=='('&&op_stack[op_pointer]=='N'){
+                        op_pointer-=2;
+                        op_stack[++op_pointer]='N';
+                        puts("R");
+                        read++;
+                    }
+                    else{
+                        puts("RE");
+                        return 0;
+                }
             break;
         case 1:
             if(curop=='i'){
