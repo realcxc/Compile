@@ -75,7 +75,6 @@ int main(int argc, char ** argv){
     }
     s[i-1]=0,s[i-2]='#';
     fclose(fp);
-    printf("%s\n",s);
     int read=0;
     while(!(op_pointer<=1&&s[read]=='#')){
         op_stack[op_pointer+1]=0;
