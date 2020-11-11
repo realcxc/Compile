@@ -32,6 +32,7 @@ int get_priority(char a,char b){
         aa=5;
         break;
     default:
+        aa=6;
         break;
     }
     switch (b)
@@ -55,8 +56,11 @@ int get_priority(char a,char b){
         bb=5;
         break;
     default:
+        bb=6;
         break;
     }
+    if(aa>5||bb>5)
+        return 2;
     return matrix[aa][bb];
 }
 int main(int argc, char ** argv){
@@ -93,16 +97,7 @@ int main(int argc, char ** argv){
             break;
         case 0:
             printf("I%c\n",curread);
-            if(op_pointer>=2&&op_stack[op_pointer-1]=='('&&op_stack[op_pointer]=='N'){
-                        op_pointer-=2;
-                        op_stack[++op_pointer]='N';
-                        puts("R");
-                        read++;
-                    }
-                    else{
-                        puts("RE");
-                        return 0;
-                }
+            op_stack[++op_pointer]=s[read++];
             break;
         case 1:
             if(curop=='i'){
