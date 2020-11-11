@@ -75,6 +75,7 @@ int main(int argc, char ** argv){
     }
     s[i-1]=0,s[i-2]='#';
     fclose(fp);
+    printf("%s\n",s);
     int read=0;
     while(!(op_pointer<=1&&s[read]=='#')){
         op_stack[op_pointer+1]=0;
@@ -85,7 +86,6 @@ int main(int argc, char ** argv){
                 break;
             }
         }
-    
         switch (get_priority(curop,curread))
         {
         case -1:
@@ -94,7 +94,7 @@ int main(int argc, char ** argv){
             break;
         case 0:
             printf("I%c\n",curread);
-            if(op_pointer>2&&op_stack[op_pointer-1]=='('&&op_stack[op_pointer]=='N'){
+            if(op_pointer>=2&&op_stack[op_pointer-1]=='('&&op_stack[op_pointer]=='N'){
                         op_pointer-=2;
                         op_stack[++op_pointer]='N';
                         puts("R");
